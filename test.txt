@@ -1,0 +1,3 @@
+Este|es|un|conjunto|de|registros|
+Este|es|un|segundo|conjunto|dataset|
+Tercer|conjunto|dataset|mediante|clase|File|
