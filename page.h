@@ -148,7 +148,7 @@ bool Page::validate_recordID(int record_ID)
 
 int Page::insert_record(std::string record_data)
 {
-    if( !has_space_for_record() )     // I think this can be changed
+    if( !has_space_for_record() ) 
     {
         std::cout << "Espacio insuficiente en la pagina " << page_number()
                   << " para almacenar el registro.\n"; 
