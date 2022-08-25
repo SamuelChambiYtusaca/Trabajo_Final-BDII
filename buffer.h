@@ -100,7 +100,7 @@ Page* Buffer::FetchPageImpl(int32_t page_id)
                 //std::cout << "NULL\n";
                 return nullptr;
             }
-            int32_t target_page_id = buffer_pool[target].page->page_number(); // page_id de la pagina que se eliminara del buffer
+            int32_t target_page_id = buffer_pool[target].page->page_number(); // Page_id de la pagina que se eliminara del buffer
             std::cout << "target_page_id: " << target_page_id << "\n"; 
             
             if(buffer_pool[target].dirty_bit)
@@ -141,7 +141,7 @@ bool Buffer::UnpinPageImpl(int32_t page_id, bool is_dirty)
     }
     else 
     {
-        // Se actualiza la metadata del fram correspondiente.
+        // Se actualiza la metadata del frame correspondiente.
         buffer_pool[target].pin_count--;
         buffer_pool[target].dirty_bit |= is_dirty;
         if(buffer_pool[target].pin_count == 0)
@@ -187,7 +187,7 @@ Page *Buffer::NewPageImpl(int32_t *page_id) {
         replacer_->Pin(free_frame);                 // Marca la pagina como "En Uso"
         buffer_pool[free_frame].page        = new Page(*page_id); // Guarda nueva pagina en el frame
         buffer_pool[free_frame].pin_count   = 1;                  // Uno en uso
-        buffer_pool[free_frame].dirty_bit   = false;              // no esta modificado, esta pito
+        buffer_pool[free_frame].dirty_bit   = false;              // No esta modificado
 
         //std::cout << "Numero asig: " << *page_id << "\n";
         return buffer_pool[free_frame].page;        // Devuelve puntero a la pagina
@@ -205,15 +205,15 @@ Page *Buffer::NewPageImpl(int32_t *page_id) {
         }
         // Coloca la pagina nueva en el buffer
         int32_t victim_page_id = buffer_pool[victim].page->page_number();
-        page_table_.erase(victim_page_id);      // borra 
-        *page_id = file_->allocatePage();       // nuevo page_id
-        page_table_[*page_id] = victim;         // guarda frame_id
-        replacer_->Pin(victim);                 // que mrd hace esto
-        buffer_pool[victim].page      = new Page(*page_id); // nueva pagina
-        buffer_pool[victim].pin_count = 1;      // uno en uso
-        buffer_pool[victim].dirty_bit = false;  // no esta modificado, esta re-pito
+        page_table_.erase(victim_page_id);      // Borra 
+        *page_id = file_->allocatePage();       // Nuevo page_id
+        page_table_[*page_id] = victim;         // Guarda frame_id
+        replacer_->Pin(victim);                 // Setea la pagina como "En Uso"
+        buffer_pool[victim].page      = new Page(*page_id); // Nueva pagina
+        buffer_pool[victim].pin_count = 1;      
+        buffer_pool[victim].dirty_bit = false; 
 
-        return buffer_pool[victim].page;    // devuelve puntero a la pagina
+        return buffer_pool[victim].page;    // Devuelve puntero a la pagina
     }
 }
 
@@ -251,7 +251,6 @@ void Buffer::FlushAllPagesImpl(){
         }
     }
 }
-
 
 Buffer::~Buffer(){
     delete replacer_;
